@@ -11,9 +11,9 @@
 #' @examples
 #' library(D3M)
 #' nrep <- 12
-#' cases <- Map(rbeta,rep(100,nrep),rep(1,nrep),rep(5,nrep)); cases <- do.call("rbind",cases)
-#' control <- Map(rbeta,rep(100,nrep),rep(1,nrep),rep(5,nrep)); control <- do.call("rbind",control)
-#' obj <- d3m(cases,control,paranum = 101, q = 2, bsn = 5000)
+#' cases <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep)); cases <- do.call("rbind",cases)
+#' control <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep)); control <- do.call("rbind",control)
+#' obj <- d3m(cases,control,paranum = 101, q = 2, bsn = 1000)
 #' topD3M(obj,ntop = 10,plot.it = TRUE)
 #' @export
 #' 

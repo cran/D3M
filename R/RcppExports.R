@@ -2,15 +2,11 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @useDynLib D3M
-#' @importFrom Rcpp evalCpp
+#' @importFrom Rcpp sourceCpp
 NULL
 
-sort_rcpp <- function(x) {
-    .Call('D3M_sort_rcpp', PACKAGE = 'D3M', x)
-}
-
-percentile_rcpp <- function(x, percentile) {
-    .Call('D3M_percentile_rcpp', PACKAGE = 'D3M', x, percentile)
+quantileCpp <- function(x, probs) {
+    .Call('D3M_quantileCpp', PACKAGE = 'D3M', x, probs)
 }
 
 wasserCpp <- function(x, y, paranum = 101L, q = 2L) {

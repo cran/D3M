@@ -23,9 +23,9 @@ Computing Wasserstein Metric
 }
 \examples{
 nrep <- 12
-cases <- Map(rbeta,rep(50,nrep),rep(1,nrep),rep(5,nrep))
+cases <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep))
 cases <- do.call("rbind",cases)
-control <- Map(rbeta,rep(50,nrep),rep(1,nrep),rep(5,nrep))
+control <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep))
 control <- do.call("rbind",control)
 wasserMetric(cases,control)
 }

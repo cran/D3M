@@ -5,26 +5,15 @@
 
 using namespace Rcpp;
 
-// sort_rcpp
-NumericVector sort_rcpp(Rcpp::NumericVector& x);
-RcppExport SEXP D3M_sort_rcpp(SEXP xSEXP) {
+// quantileCpp
+NumericVector quantileCpp(NumericVector x, NumericVector probs);
+RcppExport SEXP D3M_quantileCpp(SEXP xSEXP, SEXP probsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< Rcpp::NumericVector& >::type x(xSEXP);
-    __result = Rcpp::wrap(sort_rcpp(x));
-    return __result;
-END_RCPP
-}
-// percentile_rcpp
-NumericVector percentile_rcpp(NumericVector& x, NumericVector& percentile);
-RcppExport SEXP D3M_percentile_rcpp(SEXP xSEXP, SEXP percentileSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject __result;
-    Rcpp::RNGScope __rngScope;
-    Rcpp::traits::input_parameter< NumericVector& >::type x(xSEXP);
-    Rcpp::traits::input_parameter< NumericVector& >::type percentile(percentileSEXP);
-    __result = Rcpp::wrap(percentile_rcpp(x, percentile));
+    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type probs(probsSEXP);
+    __result = Rcpp::wrap(quantileCpp(x, probs));
     return __result;
 END_RCPP
 }

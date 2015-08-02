@@ -27,9 +27,9 @@ Statistical Test with Wasserstein Metric
 }
 \examples{
 nrep <- 12
-cases <- Map(rbeta,rep(100,nrep),rep(1,nrep),rep(5,nrep))
+cases <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep))
 cases <- do.call("rbind",cases)
-control <- Map(rbeta,rep(100,nrep),rep(1,nrep),rep(5,nrep))
+control <- Map(rbeta,rep(30,nrep),rep(1,nrep),rep(5,nrep))
 control <- do.call("rbind",control)
 d <- wasserMetric(cases,control)
 testRes <- wasser.test(cases = cases,control = control,test.stat = d)

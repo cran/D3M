@@ -6,8 +6,8 @@
 #' @return Wasserstein metric
 #' @author Yusuke Matsui & Teppei Shimamura
 #' @examples
-#' cases <- rbeta(50,1,5)
-#' control <- rbeta(50,2,5)
+#' cases <- rbeta(30,1,5)
+#' control <- rbeta(30,2,5)
 #' wasserMetric.v(cases,control)
 #' 
 #' @export
