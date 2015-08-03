@@ -22,8 +22,8 @@
 #' @return result of d3m in the list format, including p-value, test statistics, data of cases, data of control. Each element of list correponds to result from each core.
 #' 
 #' @author Yusuke Matsui & Teppei Shimamura
-#' 
-#' 
+#' @references Yusuke Matsui, Masahiro Mizuta, Satoru Miyano and Teppei Shimamura.(2015) D3M:Detection of differential distributions of methylation patterns (submitted). BIORXIV/2015/023879.
+#' @references Antonio Irpino and Rossanna Verde.(2015) Basic Statistics for distributional symbolic variables: a new metric-based approach. Adv.Data.Anal.Classif(9) 143--175
 #' @examples
 #' library(D3M)
 #' nrep <- 12
@@ -42,6 +42,7 @@ d3m.parallel <- function(cases, control, rm.mean = F, rm.var = F, paranum = 101 
   
   #library(snow)
   #library(Rcpp)
+  
   
   cl <- parallel::makeCluster(n.core,type = type)
   

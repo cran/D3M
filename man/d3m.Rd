@@ -48,4 +48,9 @@ d3m(cases,control,paranum = 101, q = 2, bsn = 1000,seed = 100)
 \author{
 Yusuke Matsui & Teppei Shimamura
 }
+\references{
+Yusuke Matsui, Masahiro Mizuta, Satoru Miyano and Teppei Shimamura.(2015) D3M:Detection of differential distributions of methylation patterns (submitted). BIORXIV/2015/023879.
+
+Antonio Irpino and Rossanna Verde.(2015) Basic Statistics for distributional symbolic variables: a new metric-based approach. Adv.Data.Anal.Classif(9) 143--175
+}
 

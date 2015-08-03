@@ -4,7 +4,8 @@
 \alias{wasser.test}
 \title{Statistical Test with Wasserstein Metric}
 \usage{
-wasser.test(cases, control, test.stat, paranum = 101, bsn = 5000, q = 2)
+wasser.test(cases, control, test.stat, paranum = 101, bsn = 5000, q = 2,
+  seed = 100)
 }
 \arguments{
 \item{cases}{name of case group data (matrix sample * feature)}
@@ -18,6 +19,8 @@ wasser.test(cases, control, test.stat, paranum = 101, bsn = 5000, q = 2)
 \item{bsn}{the number of resampling. Default is bsn = 5000.}
 
 \item{q}{power of Wasserstein metric. Default is q = 2.}
+
+\item{seed}{seed for random generator.}
 }
 \value{
 list of p-value and test statistics.
@@ -36,5 +39,10 @@ testRes <- wasser.test(cases = cases,control = control,test.stat = d)
 }
 \author{
 Yusuke Matsui & Teppei Shimamura
+}
+\references{
+Yusuke Matsui, Masahiro Mizuta, Satoru Miyano and Teppei Shimamura.(2015) D3M:Detection of differential distributions of methylation patterns (submitted). BIORXIV/2015/023879.
+
+Antonio Irpino and Rossanna Verde.(2015) Basic Statistics for distributional symbolic variables: a new metric-based approach. Adv.Data.Anal.Classif(9) 143--175
 }
 

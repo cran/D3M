@@ -21,7 +21,7 @@ randomShuffle <- function(a) {
     .Call('D3M_randomShuffle', PACKAGE = 'D3M', a)
 }
 
-permCpp <- function(casesMat, controlMat, d, bsn = 10000L, qn = 101L, q = 2L) {
-    .Call('D3M_permCpp', PACKAGE = 'D3M', casesMat, controlMat, d, bsn, qn, q)
+permCpp <- function(casesMat, controlMat, shuffleID, d, bsn = 10000L, qn = 101L, q = 2L) {
+    .Call('D3M_permCpp', PACKAGE = 'D3M', casesMat, controlMat, shuffleID, d, bsn, qn, q)
 }
 

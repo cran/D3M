@@ -57,18 +57,19 @@ BEGIN_RCPP
 END_RCPP
 }
 // permCpp
-List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, int bsn, int qn, int q);
-RcppExport SEXP D3M_permCpp(SEXP casesMatSEXP, SEXP controlMatSEXP, SEXP dSEXP, SEXP bsnSEXP, SEXP qnSEXP, SEXP qSEXP) {
+List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericMatrix shuffleID, NumericVector d, int bsn, int qn, int q);
+RcppExport SEXP D3M_permCpp(SEXP casesMatSEXP, SEXP controlMatSEXP, SEXP shuffleIDSEXP, SEXP dSEXP, SEXP bsnSEXP, SEXP qnSEXP, SEXP qSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type casesMat(casesMatSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type controlMat(controlMatSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type shuffleID(shuffleIDSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type d(dSEXP);
     Rcpp::traits::input_parameter< int >::type bsn(bsnSEXP);
     Rcpp::traits::input_parameter< int >::type qn(qnSEXP);
     Rcpp::traits::input_parameter< int >::type q(qSEXP);
-    __result = Rcpp::wrap(permCpp(casesMat, controlMat, d, bsn, qn, q));
+    __result = Rcpp::wrap(permCpp(casesMat, controlMat, shuffleID, d, bsn, qn, q));
     return __result;
 END_RCPP
 }

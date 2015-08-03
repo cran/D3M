@@ -36,11 +36,6 @@ NumericVector quantileCpp(NumericVector x, NumericVector probs){
     
   }
   
-  /*
-  for(int i = 0; i < xs.size(); i++){
-  printf("xs[%d] = %.3f\n",i,xs[i]);
-  }
-  */
   
   double xs_min = 0.0;
   
@@ -53,14 +48,6 @@ NumericVector quantileCpp(NumericVector x, NumericVector probs){
         xs_min = min(xs);
         
         result[cnt] = xs_min  + ((probs[cnt] - prev) / bin) * (xs[i] - xs_min);
-        
-        /*
-        printf("xs_min = %.3f\n",xs_min);
-        
-        printf("(probs[%d] - prev) / bin = %.2f - %.2f / %.2f = %.2f\n",cnt, probs[cnt], prev, bin,(probs[cnt] - prev) / bin);
-        
-        printf("result[%d] = %.3f\n",cnt,result[cnt]);
-        */
         
         flag--;
         
@@ -99,7 +86,7 @@ NumericVector quantileCpp(NumericVector x, NumericVector probs){
 
 // [[Rcpp::export]]
 double wasserCpp(NumericVector x, NumericVector y, int paranum = 101, int q = 2){
-  int len = x.size();   
+  //int len = x.size();   
   double d = 0;
   
   NumericVector pseq(paranum);
@@ -114,13 +101,12 @@ double wasserCpp(NumericVector x, NumericVector y, int paranum = 101, int q = 2)
   //x = x[!is_na(x)];
   //y = y[!is_na(y)];
   
-  //xq = percentile_rcpp(x, pseq);
-  //yq = percentile_rcpp(y, pseq);
-  
   xq = quantileCpp(x, pseq);
   yq = quantileCpp(y, pseq);
   
-  for(int i = 0; i < len; i++){
+  for(int i = 0; i < paranum; i++){
+    //printf("%.3f\t",xq[i]);
+    //printf("%3.f\t",yq[i]);
     d += pow(xq[i] - yq[i],q);
   }
   return d;
@@ -171,9 +157,7 @@ NumericVector wasserCpp_mat(NumericMatrix xMat, NumericMatrix yMat, int paranum 
     }
     
     for(int j = 0; j < nc_yMat; j++){
-      
-      //printf("hoge4\n");
-      
+
       y[j] = yMat(pos,j);
       
       //printf("y%d %.3f\t",j,y[j]);
@@ -194,14 +178,11 @@ NumericVector wasserCpp_mat(NumericMatrix xMat, NumericMatrix yMat, int paranum 
     //x = x[!is_na(x)];
     //y = y[!is_na(y)];
     
-    //xq = percentile_rcpp(x, pseq);    
-    //yq = percentile_rcpp(y, pseq);
-    
     xq = quantileCpp(x, pseq);
     yq = quantileCpp(y, pseq);
     
     for(int i = 0; i < paranum; i++){
-      
+      //printf("%.3f\t",xq[i]);
       d += pow(xq[i] - yq[i],q);
       
     }
@@ -214,8 +195,6 @@ NumericVector wasserCpp_mat(NumericMatrix xMat, NumericMatrix yMat, int paranum 
 }
 
 
-// wrapper around R's RNG such that we get a uniform distribution over
-// [0,n) as required by the STL algorithm
 inline int randWrapper(const int n) { return floor(unif_rand()*n); }
 
 // [[Rcpp::export]]
@@ -230,11 +209,7 @@ Rcpp::NumericVector randomShuffle(Rcpp::NumericVector a) {
 }
 
 // [[Rcpp::export]]
-List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, int bsn = 10000, int qn = 101, int q=2){ 
-  
-  
-  
-  //List permCpp(NumericVector cases, NumericVector control, double d, NumericMatrix shuffleID, int bsn = 10000, int qn = 101){  
+List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericMatrix shuffleID, NumericVector d, int bsn = 10000, int qn = 101, int q = 2){ 
   
   int nr_casesMat = casesMat.nrow();
   int nc_casesMat = casesMat.ncol();
@@ -243,18 +218,8 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
   
   //printf("nr_caseMat %d\nnc_caseMat %d\nnr_controlMat %d\nnc_controlMat %d\n",nr_casesMat,nc_casesMat,nr_controlMat,nc_controlMat);
   
-  /*
-  if(nr_casesMat != nr_controlMat){
-  //printf("Error: size of matrix is different");
-  int pval = NA_INTEGER;
-  int bootd = NA_INTEGER;
-  return List::create(pval,bootd);
-  }
-  */
   int npos = nr_casesMat;
   NumericVector pval_vec(npos);
-  //List bootd_list(npos);
-  //List res(npos);
   
   NumericVector cases(nc_casesMat);
   NumericVector control(nc_controlMat);
@@ -271,9 +236,7 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
       // printf("i,j %d %d: %f\n",pos,j,control[j]);
     }
     
-    
     //cases = cases[!is_na(cases)];
-    
     //control = control[!is_na(control)];
     
     int ncases = cases.size();
@@ -309,7 +272,7 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
     
     NumericVector bootd(bsn);
     
-    NumericVector index2;
+    //NumericVector index2;
     
     NumericVector casedata(ncases);
     
@@ -321,10 +284,7 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
     
     for(int i = 0; i < bsn; i++){
       
-      
-      //srand(i);
-      
-      index2 = randomShuffle(index);
+      //index2 = randomShuffle(index);
       
       int k;
       
@@ -332,13 +292,13 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
       
       for(int j = 0; j < ncases; j++){
         
-        k = index2[cnt];
+        //k = index2[cnt];
         
-        //k = shuffleID(i,cnt);
+        k = shuffleID(cnt,i);
         
         casedata[j] = data[k];
         
-        //printf("casedata:%.3f\t",casedata[j]);
+        //printf("casedata[%d] = %.3f = data[%d]\n",j,casedata[j],k);
         
         cnt++;
         
@@ -346,22 +306,23 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
       
       for(int j = 0; j < ncontrol; j++){
         
-        k = index2[cnt];
+        //k = index2[cnt];
         
-        //k = shuffleID(i,cnt);
+        k = shuffleID(cnt,i);
         
         controldata[j] = data[k];
-        
-        //printf("controldata:%.3f",controldata[j]);
-        
+      
+        //printf("controldata[%d] = %.3f = data[%d]\n",j,controldata[j],k);
+         
         cnt++;
         
       }
       
       a = wasserCpp(casedata, controldata, qn, q);
       
+      //printf("a[%d] = %.3f\n",i,a);
       
-      if(isnan(a) || isinf(a)){
+      if(isnan(a) || isinf(a)){  
         
         bootd[i] = NAN;
         
@@ -371,25 +332,8 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
         
         nonaN++;
       }
-      //printf("bootd[%d] = %.3f\n",i,bootd[i]);
-      //bootd[i] = wasserCpp(casedata, controldata, qn, q);
       
-    }
-    //printf("nonaN = %d\n",nonaN);
-    
-    
-    /*
-    for(int l = 0; l < bootd.size(); l++){
-    
-    printf("l:%d\n",l);
-    if((!isnan(bootd[l])) || (!isinf(bootd[l]))){
-    
-    nonaN++;  
-    
-    }      
-    }
-    */
-    
+    }    
     
     NumericVector newbootd(nonaN);
     
@@ -406,71 +350,23 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
       
     }
     
-    
-    /*
-    bool temp[newbootd.size()];
-    int num = 0;
-    for(int l = 0; l < newbootd.size(); l++){
-    //temp[l] = (bool)((bootd[l] >= d[pos]) && (!isnan(bootd[l]) && (!isinf(bootd[l]))));
-    temp[l] = (bool)((newbootd[l] >= d[pos]));
-    //temp[l] = (bool)(isnan(bootd[l]));
-    
-    num += temp[l];
-    
-    if(temp[l]){
-    printf("l: %d d[%d]: %.3f bootd: %.3f temp[%d]: %s\n",l, pos,d[pos],newbootd[l],l,temp[l]?"true":"false"); 
-    }
-    
-    }
-    
-    
-    NumericVector temp2(num);
-    
-    cnt = 0;
-    
-    for(int l = 0; l < newbootd.size(); l++){
-    
-    if(temp[l]){
-    
-    temp2[cnt] = newbootd[l];
-    
-    //printf("temp2[%d]=%.3f\n",cnt,temp2[cnt]);
-    
-    cnt++;
-    }
-    }
-    */
-    
-    
-    //printf("number of True: %d",num);
-    
-    
-    
-    
-    
     NumericVector temp = newbootd[newbootd >= d[pos]];
-    
-    
     
     double pval = (double)temp.size() / (double)newbootd.size();
     
-    //printf("bootstrap p-value (%d times) %.3f\n",bsn, pval);
-    
-    
-    //pval = 0.000001;
-    
-    //printf("pval: %.5f 1 / bsn: %.5f\n",pval, 1/bsn);
-    
+    //printf("pval=temp.size()/newbootd.size()=%.3f/%.3f= %.3f\n",(double)temp.size(), (double)newbootd.size(),pval);
     
     if(pval < (double) (1 / bsn)){
       
-      int threshold_ind = (int)bsn * 0.995;
+      //int threshold_ind = (int)bsn * 0.995;
       
-      sort(newbootd.begin(),newbootd.end());
+      //sort(newbootd.begin(),newbootd.end());
       
-      double threshold = newbootd[threshold_ind];    
+      //double threshold = newbootd[threshold_ind];
       
-      //NumericVector ptemp(estn); 
+      NumericVector thresholdv = quantileCpp(newbootd, 0.995);
+      
+      double threshold = thresholdv[0];
       
       NumericVector ptemp = newbootd[newbootd > threshold];
       
@@ -494,32 +390,28 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericVector d, 
       //printf("Estimated lambda: %f\n",lambda);
       
       
-      double param = -1 * lambda * (d[pos] - threshold);
+      //double param = -1 * lambda * (d[pos] - threshold);
+      double param = -1 * lambda * d[pos];
       
-      pval = exp(param);
+      double param2 = -1 * lambda * threshold;
+      
+      double pval_threshold = exp(param2);
+      
+      double r = pval_threshold / 0.005;
+      
+      pval = exp(param) / r;
       
       //printf("semi-parametric p-value (lambda = %.3f) %.3e\n",lambda,pval);
-      
-      //return ptemp;
-      //pval.names() = CharacterVector::create("pval");
-      //bootd.names() = CharacterVector::create("bootd");
-      //return List::create(pval,bootd);
       
     }
     
     
     pval_vec[pos] = pval;
-    
-    //bootd_list[pos] = newbootd;
-    
+        
   }
   
-  
-  //return List::create(pval_vec,bootd_list,casesMat, controlMat);
   return List::create(pval_vec,d,casesMat, controlMat);
-  
-  //return 0;
-  
+    
 }
 
 

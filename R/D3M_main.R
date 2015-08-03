@@ -28,7 +28,8 @@
 #' @return cases case group data used in the statistical test.
 #' @return control control group data used in the statistical test.
 #' @author Yusuke Matsui & Teppei Shimamura
-#' 
+#' @references Yusuke Matsui, Masahiro Mizuta, Satoru Miyano and Teppei Shimamura.(2015) D3M:Detection of differential distributions of methylation patterns (submitted). BIORXIV/2015/023879.
+#' @references Antonio Irpino and Rossanna Verde.(2015) Basic Statistics for distributional symbolic variables: a new metric-based approach. Adv.Data.Anal.Classif(9) 143--175
 #' @export
 #' 
 
@@ -46,18 +47,13 @@ d3m <- function(cases, control, rm.mean = FALSE, rm.var = FALSE, paranum = 101, 
     cases <- scale(x = cases,center = F,scale = T)
   }
 
-  d <- wasserCpp_mat(cases,control,paranum = paranum, q = q)
-  #d <- .Call("wasserCpp_mat",cases,control,paranum,q,PACKAGE = "D3M")
-  #d <- .Call("wasserCpp_mat",PACKAGE = "D3M")
+  d <- wasserMetric(cases,control,paranum = 101,q = 2)
   
   set.seed(seed)
   
-  res <- permCpp(casesMat = cases,controlMat = control,bsn = bsn,qn = paranum, d = d)  
-  #res <- .Call("permCpp",cases,control,bsn,paranum,d,PACKAGE = "D3M")  
+  res <- wasser.test(cases,control,d,bsn = bsn)
   
   return(list(pval = res[[1]], test.stat = res[[2]], cases = cases, control = control))
-  #pval <- res[[1]]
   
-  #pval
 }
 
