@@ -322,7 +322,7 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericMatrix shu
       
       //printf("a[%d] = %.3f\n",i,a);
       
-      if(isnan(a) || isinf(a)){  
+      if(!R_FINITE(a)) {
         
         bootd[i] = NAN;
         
@@ -341,7 +341,7 @@ List permCpp(NumericMatrix casesMat, NumericMatrix controlMat, NumericMatrix shu
     
     for(int l = 0; l < bootd.size(); l++){
       
-      if(!isnan(bootd[l]) && !isinf(bootd[l])){
+      if(R_FINITE(bootd[l])) {
         
         newbootd[cnt] = bootd[l];
         

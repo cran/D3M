@@ -1,4 +1,4 @@
-6698e0125d10574439f9141da0c23610 *DESCRIPTION
+f73bcbbc787bbdc802ca4136ec757f21 *DESCRIPTION
 f273beb6b839a7760a6840b62b6bc9e6 *NAMESPACE
 9d5a580b0bec79098efe4a48173935b3 *R/RcppExports.R
 53ea4760bb420c2041b2883bdd1550c0 *R/d3m.R
@@ -18,4 +18,4 @@ aa19c422248644027de6cf0de49d03b5 *man/wasser.test.Rd
 8ebb5f5b09ac57ceb86ba3127869e6b7 *man/wasserMetric.Rd
 146ae1e68f6e6c7dee6b2a9f8fb754c1 *man/wasserMetric.v.Rd
 f32f38ad45304ba27a895d515e21d5bb *src/RcppExports.cpp
-56524971d1c2f4a57d959ba40473ebef *src/funcs.cpp
+adbfd1266ef720e4c2a7885af510b614 *src/funcs.cpp
